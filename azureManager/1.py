@@ -3,7 +3,7 @@ from azure.identity import ClientSecretCredential
 
 tenant_id = '782ee8a9-08a6-4c1b-86f5-b083d7f1122f'
 client_id = 'f0bb51a4-067f-443f-b377-1a1d8631050b'
-client_secret = 'X0.8Q~ofyGd9-g3ylCU66G14XPayfvBS26SPRcBY'
+client_secret = '***'
 subscription_id = 'b69cd756-6fae-4e22-af13-639b77732f1d'
 resource_group_name = 'lastrescue'
 location = 'eastus'
