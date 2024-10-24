@@ -12,7 +12,7 @@ class Requests:
         payload= {
             'grant_type':'client_credentials',
             'client_id':'f0bb51a4-067f-443f-b377-1a1d8631050b',
-            'client_s':'****',
+            'client_secret':'X0.8Q~ofyGd9-g3ylCU66G14XPayfvBS26SPRcBY',
             'resource':'https://management.azure.com/'
         }
 
