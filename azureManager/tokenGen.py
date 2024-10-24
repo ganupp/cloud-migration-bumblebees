@@ -1,0 +1,2 @@
+class tokenGen:
+    pass
