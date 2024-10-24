@@ -16,7 +16,7 @@ spec:
         - name: my-container
           image: my-image:latest
           env:
-            - name: ENV_VAR_1
-              value: "value1"
+            - name: NODE_ENV
+              value: "production"
             - name: ENV_VAR_2
               value: "value2"
