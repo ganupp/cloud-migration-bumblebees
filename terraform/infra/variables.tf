@@ -41,7 +41,7 @@ variable "client_id" {
   default = "your-client-id"
 }
 
-variable "client_secret" {
+variable "client_s" {
   type    = string
   default = "your-client-secret"
 }
