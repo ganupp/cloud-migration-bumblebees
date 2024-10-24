@@ -1,24 +1,35 @@
 # cloud-migration-bumblebees
+Accelerating public cloud migration from traditional hosting services to azure
+
+
 Requirement--------------------------
 
-pip install python-hcl2 azure-identity azure-mgmt-resource
+pip install 
+            python-hcl2 
+            pyyaml
+            azure-identity 
+            azure-mgmt-resource
 
 install azure cli in mac ---------- 
-
 
 git clone https://github.com/Homebrew/brew homebrew
 eval "$(homebrew/bin/brew shellenv)"\nbrew update --force --quiet\nchmod -R go-w "$(brew --prefix)/share/zsh"
 brew update && brew install azure-cli
 
 
-Accelerating public cloud migration from traditional hosting services to azure
-
-
-
 Folder structure -------------------------------------------
 
 cloud-migration-bumblebees/
-├── main.py                    
+├── main.py 
+├── /k8s                
+│   ├── deployment.yaml  
+│   ├── service.yaml     
+├── /src                 
+│   ├── index.js         
+│   └── ...
+├── Dockerfile           
+├── .dockerignore      
+└── package.json                     
 ├── terraform/
 │   └── infra/                 
 │       ├── backend.ENV.hcl.dist
