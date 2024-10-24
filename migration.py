@@ -11,7 +11,10 @@ class Migration:
         parser_ocs.parse_tf_files_in_folder()
         return parser_ocs.parsed_vars
 
-    def _parse_kube(self):
+    def _parse_kube(self, base_folder_path):
+        parser_kube = Parserkube(base_folder_path)
+        parser_kube.parse_k8s_files_in_folder()
+        return parser_kube.parsed_vars
         pass
 
     def parser(self, base_type, base_folder_path):
