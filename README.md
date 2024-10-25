@@ -12,6 +12,10 @@ pip install
             watchdog
             streamlit
 
+running in virtual env ---------------
+virtualenv env.
+env/bin/activate
+
 install azure cli in mac ---------- 
 
 git clone https://github.com/Homebrew/brew homebrew
