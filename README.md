@@ -9,6 +9,8 @@ pip install
             pyyaml
             azure-identity 
             azure-mgmt-resource
+            watchdog
+            streamlit
 
 install azure cli in mac ---------- 
 
