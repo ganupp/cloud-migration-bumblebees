@@ -9,6 +9,12 @@ pip install
             pyyaml
             azure-identity 
             azure-mgmt-resource
+            watchdog
+            streamlit
+
+running in virtual env ---------------
+virtualenv env.
+env/bin/activate
 
 install azure cli in mac ---------- 
 

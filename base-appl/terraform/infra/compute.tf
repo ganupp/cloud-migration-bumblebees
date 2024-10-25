@@ -21,7 +21,7 @@ resource "cloudplatform_compute_instance" "vm" {
 }
 
 # DNS CNAME Record
-resource "cloudplatform_dns_cname_record_v2" "dns-alias" {
+resource "cloudplatform_dns_cname_record_v2" "dns- alias" {
   name    = var.dns_name
   target  = cloudplatform_slb_vip_v1.service_vip.fqdn
   zone_id = data.cloudplatform_dns_zone.fr_world_socgen.id

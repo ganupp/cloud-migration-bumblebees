@@ -1,130 +1,62 @@
-import hcl2
+import streamlit as st
+from git import Repo
 import os
-import yaml
-from azure.identity import DefaultAzureCredential
-from azure.mgmt.resource import ResourceManagementClient
+import re
 
+# Define a permanent download path
 
-def parse_tf_files_in_folder(folder_path):
-    parsed_vars = {}
+project_path = os.getcwd()
+DOWNLOAD_DIR = project_path + "/cloud-migration-bumblebees/base-appl"
+print(DOWNLOAD_DIR)
 
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".tf"):
-            tf_file_path = os.path.join(folder_path, filename)
-            with open(tf_file_path, "r") as tf_file:
-                tf_config = hcl2.load(tf_file)
-                variables = tf_config.get("variable", [])
-                for var in variables:
-                    if isinstance(var, dict):
-                        for key, value in var.items():
-                            parsed_vars[key] = value.get("default", None)
+# Ensure the directory exists
+os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
-    return parsed_vars
+# Function to sanitize GitHub URLs and clone the repository
+def sanitize_and_clone(repo_url, download_path):
+    # Remove any additional parts like /tree/main or /blob/main
+    sanitized_url = re.sub(r"/(tree|blob)/.*", "", repo_url)
+    
+    if not sanitized_url.endswith(".git"):
+        sanitized_url += ".git"  # Ensure the URL ends with .git
 
+    try:
+        Repo.clone_from(sanitized_url, download_path)
+        return f"Downloaded repository from {sanitized_url}"
+    except Exception as e:
+        return f"Failed to download {sanitized_url}: {e}"
 
-def parse_k8s_files_in_folder(folder_path):
-    parsed_k8s_info = {}
-
-    for filename in os.listdir(folder_path):
-        if filename.endswith((".yaml", ".yml")):
-            k8s_file_path = os.path.join(folder_path, filename)
-
-            with open(k8s_file_path, "r") as k8s_file:
-                try:
-                    k8s_config = yaml.safe_load(k8s_file)
-                    kind = k8s_config.get("kind")
-                    metadata = k8s_config.get("metadata", {})
-                    name = metadata.get("name")
-                    namespace = metadata.get("namespace")
-                    labels = metadata.get("labels", {})
-
-                    if kind == "Deployment":
-                        parsed_k8s_info[name] = {
-                            "kind": kind,
-                            "namespace": namespace,
-                            "labels": labels,
-                            "annotations": metadata.get("annotations", {}),
-                            "containers": {},
-                        }
-
-                        for container in k8s_config["spec"]["template"]["spec"].get(
-                            "containers", []
-                        ):
-                            container_name = container["name"]
-                            parsed_k8s_info[name]["containers"][container_name] = {
-                                "image": container["image"],
-                                "env_vars": {
-                                    env_var["name"]: env_var.get("value")
-                                    for env_var in container.get("env", [])
-                                },
-                            }
-
-                    elif kind == "Service":
-                        parsed_k8s_info[name] = {
-                            "kind": kind,
-                            "namespace": namespace,
-                            "labels": labels,
-                            "ports": k8s_config.get("spec", {}).get("ports", []),
-                        }
-
-                except yaml.YAMLError as e:
-                    print(f"Error parsing YAML file {filename}: {e}")
-                except KeyError as e:
-                    print(f"Missing expected key in file {filename}: {e}")
-
-    return parsed_k8s_info
-
-
-# # Step 2: Create Azure Resource via Azure APIs
-# def create_azure_resource(parsed_vars):
-#     # Authenticate with Azure
-#     credential = DefaultAzureCredential()
-#     subscription_id = "<Your Azure Subscription ID>"
-
-#     # Initialize Resource Management Client
-#     resource_client = ResourceManagementClient(credential, subscription_id)
-
-#     # Extract values from parsed Terraform variables
-#     resource_group_name = parsed_vars.get("app_name", "my-resource-group")
-#     region = parsed_vars.get("region", "eastus")
-
-#     # Create Resource Group
-#     resource_group_params = {"location": region}
-
-#     print(f"Creating resource group '{resource_group_name}' in region '{region}'")
-
-#     resource_group_result = resource_client.resource_groups.create_or_update(
-#         resource_group_name, resource_group_params
-#     )
-
-#     print(f"Resource group created: {resource_group_result.id}")
-
-#     # Additional resources can be created here using other parsed variables
-
-
+# Streamlit app
 def main():
-    tf_folder_path = "terraform/infra"
-    k8s_folder_path = "k8s"
-
-    parsed_tf_vars = parse_tf_files_in_folder(tf_folder_path)
-
-    parsed_k8s_vars = parse_k8s_files_in_folder(k8s_folder_path)
-
-    print("Parsed Terraform Variables:")
-    tf_dic = {}
-    for key, value in parsed_tf_vars.items():
-        tf_dic[key] = value
-    print(tf_dic)
-
-    print("\nParsed Kubernetes Environment Variables:")
-    k8s_dic = {}
-    for key, value in parsed_k8s_vars.items():
-        k8s_dic[key] = value
-    print(k8s_dic)
-
-    # Step 2: Create Azure resources using the parsed variables
-    # create_azure_resource(parsed_vars)
-
-
+    st.header("GEN1 and GEN2 inputs")
+    
+    war_file = st.file_uploader("Upload a WAR file", type="war")
+    if war_file is not None:
+        # Define the path to save the uploaded file
+        save_path = f"./cloud-migration-bumblebees/war-files/{war_file.name}"
+        
+        # Save the file
+        with open(save_path, "wb") as f:
+            f.write(war_file.getbuffer())
+        st.write("WAR file saved successfully!")
+        st.write("File path:", save_path)
+    
+    # Step 2: GitHub repository URLs input
+    repo_urls = st.text_area("Enter GitHub repository URLs (one per line)", "")
+    
+    # Step 3: Process and download repositories
+    if st.button("Download Repositories"):
+        repo_urls_list = repo_urls.strip().splitlines()
+        
+        for repo_url in repo_urls_list:
+            # Use the base name of the repo URL for the folder name
+            repo_name = os.path.basename(repo_url)
+            download_path = os.path.join(DOWNLOAD_DIR, repo_name)
+            
+            status = sanitize_and_clone(repo_url, download_path)
+            st.write(status)
+                
+        st.success(f"Repositories download completed! Check the '{DOWNLOAD_DIR}' directory.")
+    
 if __name__ == "__main__":
     main()
