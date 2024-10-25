@@ -43,7 +43,6 @@ class Manager:
         vm_size,
         os_type,
     ):
-        print("woho")
         url = f"https://management.azure.com/subscriptions/{self.subscription_id}/resourceGroups/{self.resource_group_name}/providers/Microsoft.ContainerService/managedClusters/{cluster_name}?api-version=2023-09-01"
         headers = {
             "Authorization": f"Bearer {self.bearer_token}",

@@ -74,3 +74,6 @@ base_folder_path = "base-appl/k8s"
 parsed_response = migration_engine.parser("kube", base_folder_path)
 # for key, value in parsed_response.items():
 #     print(f"{key}: {value}")
+
+
+print("Success")

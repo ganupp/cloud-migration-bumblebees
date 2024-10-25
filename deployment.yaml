@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bumblebees
+  name: bumblebees-demo-right
   labels:
-    app: bumblebees
+    app: bumblebees-demo-right
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bumblebees
+      app: bumblebees-demo-right
   template:
     metadata:
       labels:
-        app: bumblebees
+        app: bumblebees-demo-right
     spec:
       containers:
-      - name: bumblebeescontainer
+      - name: bumblebees-demo-rightcontainer
         image: my-app-image:latest
         ports:
         - containerPort: 80

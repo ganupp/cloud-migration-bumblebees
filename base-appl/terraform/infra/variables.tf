@@ -13,7 +13,7 @@ variable "availability_zone" {
 variable "app_name" {
   type        = string
   description = "Name of the application."
-  default     = "bumblebees"
+  default     = "bumblebees-demo-right"
 }
 
 variable "flavor" {
