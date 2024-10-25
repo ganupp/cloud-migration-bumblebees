@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bumblebees
+  labels:
+    app: bumblebees
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bumblebees
+  template:
+    metadata:
+      labels:
+        app: bumblebees
+    spec:
+      containers:
+      - name: bumblebeescontainer
+        image: my-app-image:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: MY_ENV_VAR
+          value: "my_value"

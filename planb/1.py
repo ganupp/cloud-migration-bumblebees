@@ -1,31 +1,24 @@
 import requests
 from azure.identity import ClientSecretCredential
 
-tenant_id = '782ee8a9-08a6-4c1b-86f5-b083d7f1122f'
-client_id = 'f0bb51a4-067f-443f-b377-1a1d8631050b'
-client_secret = 'X0.8Q~ofyGd9-g3ylCU66G14XPayfvBS26SPRcBY'
-subscription_id = 'b69cd756-6fae-4e22-af13-639b77732f1d'
-resource_group_name = 'lastrescue'
-location = 'eastus'
-deployment_name = 'my-deployment'
+tenant_id = "782ee8a9-08a6-4c1b-86f5-b083d7f1122f"
+client_id = "f0bb51a4-067f-443f-b377-1a1d8631050b"
+client_secret = "X0.8Q~ofyGd9-g3ylCU66G14XPayfvBS26SPRcBY"
+subscription_id = "b69cd756-6fae-4e22-af13-639b77732f1d"
+resource_group_name = "lastrescue"
+location = "eastus"
+deployment_name = "my-deployment"
 
 # Authenticate and get the token
 credential = ClientSecretCredential(
-    tenant_id=tenant_id,
-    client_id=client_id,
-    client_secret=client_secret
+    tenant_id=tenant_id, client_id=client_id, client_secret=client_secret
 )
 token = credential.get_token("https://management.azure.com/.default").token
 
 # Create Resource Group
 url = f"https://management.azure.com/subscriptions/{subscription_id}/resourcegroups/{resource_group_name}?api-version=2021-04-01"
-payload = {
-    "location": location
-}
-headers = {
-    'Authorization': f'Bearer {token}',
-    'Content-Type': 'application/json'
-}
+payload = {"location": location}
+headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 response = requests.put(url, json=payload, headers=headers)
 if response.status_code == 201:
     print("Resource Group created successfully.")
