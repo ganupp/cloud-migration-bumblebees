@@ -9,34 +9,41 @@ $ pip install -r requirements.txt
 $ ./run.sh
 ````
 
-## Starting point
-migration.py > Azure services
-main.py      > UI
+## Pre-requisites
+Azure account \
+Base application hosted in traditional infra
+
+## Folder structure
+
+### Starting point
+| __File__      | __Functionality__ |
+|---------------|------------------------|
+|run.sh     |bash script to run the scripts |
+|migration.py     |Backend starting point|
+|main.py     |UI starting point |
 
 
-cloud-migration-bumblebees/
-├──azureManager/
-   └──azure_manager.py
-   └──constants.py
-├── main.py 
-├── /k8s                
-│   ├── deployment.yaml  
-│   ├── service.yaml     
-├── /src                 
-│   ├── index.js         
-│   └── ...
-├── Dockerfile           
-├── .dockerignore      
-└── package.json                     
-├── terraform/
-│   └── infra/                 
-│       ├── backend.ENV.hcl.dist
-│       ├── compute.tf
-│       ├── data.tf
-│       ├── monitoring.tf
-│       ├── provider.tf
-│       ├── secrets.ENV.tfvars.dist
-│       ├── slb.tf
-│       ├── terraform.tf
-│       └── variables.tf
-└── README.md                 
+### Modules
+| __Folder__      | __Functionality__ |
+|---------------|------------------------|
+|azureManager     |Service to interact with Azure |
+|parsers     |Util module with OCS & K8s parsers |
+|scriptGenerators     |Util module to generate yamls from template |
+
+### Base Application
+| __Folder__      | __Functionality__ |
+|---------------|------------------------|
+|base-appl     |Whiteapp with .tf and .yaml configs to test |
+|cloud-migration-bumblebees/war-files | repo/ .war files downloaded from UI input |
+
+### Plan B
+| __Folder__      | __Functionality__ |
+|---------------|------------------------|
+|planb     |Other tested approaces - azure SDK, terraform scripts |
+
+## Tech stack
+Python 3.12 \
+Streamlit (python) \ 
+requirements.txt
+
+
