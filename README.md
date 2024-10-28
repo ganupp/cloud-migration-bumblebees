@@ -43,7 +43,7 @@ Base application hosted in traditional infra
 
 ## Tech stack
 Python 3.12 \
-Streamlit (python) \ 
+Streamlit (python) \
 requirements.txt
 
 
