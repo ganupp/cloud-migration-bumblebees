@@ -15,7 +15,7 @@ Base application hosted in traditional infra
 
 ## Folder structure
 
-### Starting point
+### Starting Point
 | __File__      | __Functionality__ |
 |---------------|------------------------|
 |run.sh     |bash script to run the scripts |
@@ -41,7 +41,7 @@ Base application hosted in traditional infra
 |---------------|------------------------|
 |planb     |Other tested approaches - azure SDK, terraform scripts |
 
-## Tech stack
+## Tech Stack
 Python 3.12 \
 Streamlit (python) \
 requirements.txt
