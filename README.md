@@ -39,7 +39,7 @@ Base application hosted in traditional infra
 ### Plan B
 | __Folder__      | __Functionality__ |
 |---------------|------------------------|
-|planb     |Other tested approaces - azure SDK, terraform scripts |
+|planb     |Other tested approaches - azure SDK, terraform scripts |
 
 ## Tech stack
 Python 3.12 \
