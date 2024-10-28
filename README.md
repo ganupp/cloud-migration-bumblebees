@@ -3,13 +3,15 @@ Accelerating public cloud migration from traditional hosting services to Azure.
 
 ## Execution
 ````
-$python3 -m venv .venv
-pip install -r requirements.txt
-./run.sh
+$ python3 -m venv .venv
+$ source .vev/Scripts/activate
+$ pip install -r requirements.txt
+$ ./run.sh
 ````
 
 ## Starting point
-migration.py
+migration.py > Azure services
+main.py      > UI
 
 
 cloud-migration-bumblebees/
